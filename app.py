@@ -44,7 +44,7 @@ country_map = {"United-States": 0, "India": 1, "Mexico": 2, "Philippines": 3, "O
 features = pd.DataFrame([[
     age,
     workclass_map[workclass],
-    education_map,
+    education_map[education],
     marital_map[marital_status],
     occupation_map[occupation],
     relationship_map[relationship],
