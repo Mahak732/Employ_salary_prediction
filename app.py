@@ -11,8 +11,33 @@ st.write("Enter the details below to predict whether income is >50K or <=50K.")
 
 # Input fields for all features
 age = st.number_input("Age", min_value=17, max_value=90, value=30)
+
 workclass = st.selectbox("Workclass", ["Private", "Self-emp", "Gov", "Other"])
-educational_num = st.selectbox("Education", ["High School", "Bachelors", "Masters", "PhD", "Other"])
+
+# Educational number is a numerical representation of education level
+education_level = st.selectbox("Highest Education Achieved", [
+    "Preschool", "1st-4th", "5th-6th", "7th-8th", "9th", "10th", "11th", "12th",
+    "HS-grad", "Some-college", "Assoc-acdm", "Assoc-voc", "Bachelors", "Masters", "Doctorate"
+])
+education_map = {
+    "Preschool": 1,
+    "1st-4th": 2,
+    "5th-6th": 3,
+    "7th-8th": 4,
+    "9th": 5,
+    "10th": 6,
+    "11th": 7,
+    "12th": 8,
+    "HS-grad": 9,
+    "Some-college": 10,
+    "Assoc-acdm": 11,
+    "Assoc-voc": 12,
+    "Bachelors": 13,
+    "Masters": 14,
+    "Doctorate": 16
+}
+educational_num = education_map[education_level]
+
 marital_status = st.selectbox("Marital Status", ["Married", "Single", "Divorced", "Widowed", "Other"])
 occupation = st.selectbox("Occupation", ["Tech-support", "Craft-repair", "Sales", "Exec-managerial", "Other"])
 relationship = st.selectbox("Relationship", ["Husband", "Not-in-family", "Own-child", "Unmarried", "Other"])
@@ -22,17 +47,15 @@ gender = st.selectbox("Gender", ["Male", "Female"])
 has_investment_income = st.selectbox("Do you have investment income?", ["No", "Yes"])
 capital_gain = 0
 capital_loss = 0
-
 if has_investment_income == "Yes":
-    capital_gain = st.number_input("Approximate Capital Gain (₹)", min_value=0, max_value=100000, value=5000)
-    capital_loss = st.number_input("Approximate Capital Loss (₹)", min_value=0, max_value=100000, value=0)
+    capital_gain = st.number_input("Capital Gain (₹)", min_value=0, max_value=100000, value=5000)
+    capital_loss = st.number_input("Capital Loss (₹)", min_value=0, max_value=100000, value=0)
 
 hours_per_week = st.slider("Hours per Week", 1, 100, 40)
 native_country = st.selectbox("Native Country", ["United-States", "India", "Mexico", "Philippines", "Other"])
 
-# Dummy encoding maps (replace these with your actual training encodings)
+# Encoding maps
 workclass_map = {"Private": 0, "Self-emp": 1, "Gov": 2, "Other": 3}
-education_map = {"High School": 9, "Bachelors": 13, "Masters": 15, "PhD": 16, "Other": 11}
 marital_map = {"Married": 0, "Single": 1, "Divorced": 2, "Widowed": 3, "Other": 4}
 occupation_map = {"Tech-support": 0, "Craft-repair": 1, "Sales": 2, "Exec-managerial": 3, "Other": 4}
 relationship_map = {"Husband": 0, "Not-in-family": 1, "Own-child": 2, "Unmarried": 3, "Other": 4}
@@ -41,10 +64,10 @@ gender_map = {"Male": 0, "Female": 1}
 country_map = {"United-States": 0, "India": 1, "Mexico": 2, "Philippines": 3, "Other": 4}
 
 # Create input DataFrame with correct column names
-features = pd.DataFrame([[
+features = pd.DataFrame([[ 
     age,
     workclass_map[workclass],
-    education_map[educational_num],
+    educational_num,
     marital_map[marital_status],
     occupation_map[occupation],
     relationship_map[relationship],
@@ -55,7 +78,7 @@ features = pd.DataFrame([[
     hours_per_week,
     country_map[native_country]
 ]], columns=[
-    "age", "workclass", "educational_num", "marital-status", "occupation",
+    "age", "workclass", "educational-num", "marital-status", "occupation",
     "relationship", "race", "gender", "capital-gain", "capital-loss",
     "hours-per-week", "native-country"
 ])
