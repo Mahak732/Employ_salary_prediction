@@ -12,7 +12,7 @@ st.write("Enter the details below to predict whether income is >50K or <=50K.")
 # Input fields for all features
 age = st.number_input("Age", min_value=17, max_value=90, value=30)
 workclass = st.selectbox("Workclass", ["Private", "Self-emp", "Gov", "Other"])
-education = st.selectbox("Education", ["High School", "Bachelors", "Masters", "PhD", "Other"])
+educational_num = st.selectbox("Education", ["High School", "Bachelors", "Masters", "PhD", "Other"])
 marital_status = st.selectbox("Marital Status", ["Married", "Single", "Divorced", "Widowed", "Other"])
 occupation = st.selectbox("Occupation", ["Tech-support", "Craft-repair", "Sales", "Exec-managerial", "Other"])
 relationship = st.selectbox("Relationship", ["Husband", "Not-in-family", "Own-child", "Unmarried", "Other"])
@@ -55,7 +55,7 @@ features = pd.DataFrame([[
     hours_per_week,
     country_map[native_country]
 ]], columns=[
-    "age", "workclass", "educational", "marital-status", "occupation",
+    "age", "workclass", "educational_num", "marital-status", "occupation",
     "relationship", "race", "gender", "capital-gain", "capital-loss",
     "hours-per-week", "native-country"
 ])
