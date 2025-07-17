@@ -5,54 +5,44 @@ import joblib
 # Load model
 model = joblib.load("xgboost_model.pkl")
 
-st.set_page_config(page_title="Salary Prediction", layout="centered")
-st.title("💼 Salary Prediction App")
-st.write("Enter the details below to predict whether income is >50K or <=50K.")
+# Page config
+st.set_page_config(page_title="Salary Prediction App", layout="wide")
+st.markdown("# 💼 Salary Prediction App")
+st.markdown("Predict if a person earns **>50K or <=50K** based on their profile.")
 
-# Input fields for all features
-age = st.number_input("Age", min_value=17, max_value=90, value=30)
+# Sidebar for input
+st.sidebar.header("📝 Input Features")
 
-workclass = st.selectbox("Workclass", ["Private", "Self-emp", "Gov", "Other"])
+# Input fields
+age = st.sidebar.number_input("Age", min_value=17, max_value=90, value=30)
 
-# Educational number is a numerical representation of education level
-education_level = st.selectbox("Highest Education Achieved", [
+workclass = st.sidebar.selectbox("Workclass", ["Private", "Self-emp", "Gov", "Other"])
+
+education_level = st.sidebar.selectbox("Education Level", [
     "Preschool", "1st-4th", "5th-6th", "7th-8th", "9th", "10th", "11th", "12th",
     "HS-grad", "Some-college", "Assoc-acdm", "Assoc-voc", "Bachelors", "Masters", "Doctorate"
 ])
 education_map = {
-    "Preschool": 1,
-    "1st-4th": 2,
-    "5th-6th": 3,
-    "7th-8th": 4,
-    "9th": 5,
-    "10th": 6,
-    "11th": 7,
-    "12th": 8,
-    "HS-grad": 9,
-    "Some-college": 10,
-    "Assoc-acdm": 11,
-    "Assoc-voc": 12,
-    "Bachelors": 13,
-    "Masters": 14,
-    "Doctorate": 16
+    "Preschool": 1, "1st-4th": 2, "5th-6th": 3, "7th-8th": 4, "9th": 5, "10th": 6,
+    "11th": 7, "12th": 8, "HS-grad": 9, "Some-college": 10, "Assoc-acdm": 11,
+    "Assoc-voc": 12, "Bachelors": 13, "Masters": 14, "Doctorate": 16
 }
 educational_num = education_map[education_level]
 
-marital_status = st.selectbox("Marital Status", ["Married", "Single", "Divorced", "Widowed", "Other"])
-occupation = st.selectbox("Occupation", ["Tech-support", "Craft-repair", "Sales", "Exec-managerial", "Other"])
-relationship = st.selectbox("Relationship", ["Husband", "Not-in-family", "Own-child", "Unmarried", "Other"])
-race = st.selectbox("Race", ["White", "Black", "Asian-Pac-Islander", "Amer-Indian-Eskimo", "Other"])
-gender = st.selectbox("Gender", ["Male", "Female"])
+marital_status = st.sidebar.selectbox("Marital Status", ["Married", "Single", "Divorced", "Widowed", "Other"])
+occupation = st.sidebar.selectbox("Occupation", ["Tech-support", "Craft-repair", "Sales", "Exec-managerial", "Other"])
+relationship = st.sidebar.selectbox("Relationship", ["Husband", "Not-in-family", "Own-child", "Unmarried", "Other"])
+race = st.sidebar.selectbox("Race", ["White", "Black", "Asian-Pac-Islander", "Amer-Indian-Eskimo", "Other"])
+gender = st.sidebar.selectbox("Gender", ["Male", "Female"])
+native_country = st.sidebar.selectbox("Native Country", ["United-States", "India", "Mexico", "Philippines", "Other"])
 
-has_investment_income = st.selectbox("Do you have investment income?", ["No", "Yes"])
-capital_gain = 0
-capital_loss = 0
+has_investment_income = st.sidebar.radio("Investment Income?", ["No", "Yes"])
+capital_gain, capital_loss = 0, 0
 if has_investment_income == "Yes":
-    capital_gain = st.number_input("Capital Gain (₹)", min_value=0, max_value=100000, value=5000)
-    capital_loss = st.number_input("Capital Loss (₹)", min_value=0, max_value=100000, value=0)
+    capital_gain = st.sidebar.number_input("Capital Gain (₹)", min_value=0, max_value=100000, value=5000)
+    capital_loss = st.sidebar.number_input("Capital Loss (₹)", min_value=0, max_value=100000, value=0)
 
-hours_per_week = st.slider("Hours per Week", 1, 100, 40)
-native_country = st.selectbox("Native Country", ["United-States", "India", "Mexico", "Philippines", "Other"])
+hours_per_week = st.sidebar.slider("Hours per Week", 1, 100, 40)
 
 # Encoding maps
 workclass_map = {"Private": 0, "Self-emp": 1, "Gov": 2, "Other": 3}
@@ -63,7 +53,7 @@ race_map = {"White": 0, "Black": 1, "Asian-Pac-Islander": 2, "Amer-Indian-Eskimo
 gender_map = {"Male": 0, "Female": 1}
 country_map = {"United-States": 0, "India": 1, "Mexico": 2, "Philippines": 3, "Other": 4}
 
-# Create input DataFrame with correct column names
+# Input as DataFrame
 features = pd.DataFrame([[ 
     age,
     workclass_map[workclass],
@@ -83,8 +73,28 @@ features = pd.DataFrame([[
     "hours-per-week", "native-country"
 ])
 
-# Predict
-if st.button("Predict Salary"):
+# Prediction and result
+if st.button("🔍 Predict Salary"):
     prediction = model.predict(features)[0]
     result = ">50K" if prediction == 1 else "<=50K"
-    st.success(f"💰 Predicted Income: {result}")
+
+    st.markdown("---")
+    st.subheader("📊 Prediction Result")
+    st.success(f"### 💰 Predicted Salary: **{result}**")
+
+    if capital_gain > 0:
+        st.info(f"📈 Detected capital gain of ₹{capital_gain} — likely influencing prediction.")
+
+st.markdown("""
+<style>
+    .main {background-color: #f8f9fa;}
+    h1, h2, h3 {color: #003366;}
+    .stButton>button {
+        background-color: #008CBA;
+        color: white;
+        border-radius: 8px;
+    }
+</style>
+""", unsafe_allow_html=True)
+
+
