@@ -12,14 +12,22 @@ st.write("Enter the details below to predict whether income is >50K or <=50K.")
 # Input fields for all features
 age = st.number_input("Age", min_value=17, max_value=90, value=30)
 workclass = st.selectbox("Workclass", ["Private", "Self-emp", "Gov", "Other"])
-education_num = st.slider("Education Level (Numeric)", 1, 16, 10)
+education = st.selectbox("Education", ["High School", "Bachelors", "Masters", "PhD", "Other"])
+education_map = {"High School": 9, "Bachelors": 13, "Masters": 15, "PhD": 16, "Other": 11}
 marital_status = st.selectbox("Marital Status", ["Married", "Single", "Divorced", "Widowed", "Other"])
 occupation = st.selectbox("Occupation", ["Tech-support", "Craft-repair", "Sales", "Exec-managerial", "Other"])
 relationship = st.selectbox("Relationship", ["Husband", "Not-in-family", "Own-child", "Unmarried", "Other"])
 race = st.selectbox("Race", ["White", "Black", "Asian-Pac-Islander", "Amer-Indian-Eskimo", "Other"])
 gender = st.selectbox("Gender", ["Male", "Female"])
-capital_gain = st.number_input("Capital Gain", min_value=0, value=0)
-capital_loss = st.number_input("Capital Loss", min_value=0, value=0)
+
+has_investment_income = st.selectbox("Do you have investment income?", ["No", "Yes"])
+capital_gain = 0
+capital_loss = 0
+
+if has_investment_income == "Yes":
+    capital_gain = st.number_input("Approximate Capital Gain (₹)", min_value=0, max_value=100000, value=5000)
+    capital_loss = st.number_input("Approximate Capital Loss (₹)", min_value=0, max_value=100000, value=0)
+
 hours_per_week = st.slider("Hours per Week", 1, 100, 40)
 native_country = st.selectbox("Native Country", ["United-States", "India", "Mexico", "Philippines", "Other"])
 
