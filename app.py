@@ -7,7 +7,7 @@ model = joblib.load("xgboost_model.pkl")
 
 # Page config
 st.set_page_config(page_title="Salary Prediction App", layout="wide")
-st.markdown("# 💼 Salary Prediction App")
+st.markdown("# Salary Prediction App")
 st.markdown("Predict if a person earns **>50K or <=50K** based on their profile.")
 
 # Sidebar for input
@@ -85,16 +85,5 @@ if st.button("🔍 Predict Salary"):
     if capital_gain > 0:
         st.info(f"📈 Detected capital gain of ₹{capital_gain} — likely influencing prediction.")
 
-st.markdown("""
-<style>
-    .main {background-color: #f8f9fa;}
-    h1, h2, h3 {color: #003366;}
-    .stButton>button {
-        background-color: #008CBA;
-        color: white;
-        border-radius: 8px;
-    }
-</style>
-""", unsafe_allow_html=True)
 
 
