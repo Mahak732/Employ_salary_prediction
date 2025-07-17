@@ -30,7 +30,10 @@ education_map = {
 educational_num = education_map[education_level]
 
 marital_status = st.sidebar.selectbox("Marital Status", ["Married", "Single", "Divorced", "Widowed", "Other"])
-occupation = st.sidebar.selectbox("Occupation", ["Tech-support", "Craft-repair", "Sales", "Exec-managerial", "Other"])
+occupation = st.sidebar.selectbox("Occupation", ['Tech-support', 'Craft-repair', 'Other-service', 'Sales', 'Exec-managerial',
+    'Prof-specialty', 'Handlers-cleaners', 'Machine-op-inspct', 'Adm-clerical',
+    'Farming-fishing', 'Transport-moving', 'Priv-house-serv', 'Protective-serv',
+    'Armed-Forces'])
 relationship = st.sidebar.selectbox("Relationship", ["Husband", "Not-in-family", "Own-child", "Unmarried", "Other"])
 race = st.sidebar.selectbox("Race", ["White", "Black", "Asian-Pac-Islander", "Amer-Indian-Eskimo", "Other"])
 gender = st.sidebar.selectbox("Gender", ["Male", "Female"])
@@ -47,7 +50,23 @@ hours_per_week = st.sidebar.slider("Hours per Week", 1, 100, 40)
 # Encoding maps
 workclass_map = {"Private": 0, "Self-emp": 1, "Gov": 2, "Other": 3}
 marital_map = {"Married": 0, "Single": 1, "Divorced": 2, "Widowed": 3, "Other": 4}
-occupation_map = {"Tech-support": 0, "Craft-repair": 1, "Sales": 2, "Exec-managerial": 3, "Other": 4}
+occupation_map = {
+    'Tech-support': 0,
+    'Craft-repair': 1,
+    'Other-service': 2,
+    'Sales': 3,
+    'Exec-managerial': 4,
+    'Prof-specialty': 5,
+    'Handlers-cleaners': 6,
+    'Machine-op-inspct': 7,
+    'Adm-clerical': 8,
+    'Farming-fishing': 9,
+    'Transport-moving': 10,
+    'Priv-house-serv': 11,
+    'Protective-serv': 12,
+    'Armed-Forces': 13
+}
+
 relationship_map = {"Husband": 0, "Not-in-family": 1, "Own-child": 2, "Unmarried": 3, "Other": 4}
 race_map = {"White": 0, "Black": 1, "Asian-Pac-Islander": 2, "Amer-Indian-Eskimo": 3, "Other": 4}
 gender_map = {"Male": 0, "Female": 1}
