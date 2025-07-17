@@ -13,7 +13,6 @@ st.write("Enter the details below to predict whether income is >50K or <=50K.")
 age = st.number_input("Age", min_value=17, max_value=90, value=30)
 workclass = st.selectbox("Workclass", ["Private", "Self-emp", "Gov", "Other"])
 education = st.selectbox("Education", ["High School", "Bachelors", "Masters", "PhD", "Other"])
-education_map = {"High School": 9, "Bachelors": 13, "Masters": 15, "PhD": 16, "Other": 11}
 marital_status = st.selectbox("Marital Status", ["Married", "Single", "Divorced", "Widowed", "Other"])
 occupation = st.selectbox("Occupation", ["Tech-support", "Craft-repair", "Sales", "Exec-managerial", "Other"])
 relationship = st.selectbox("Relationship", ["Husband", "Not-in-family", "Own-child", "Unmarried", "Other"])
@@ -33,6 +32,7 @@ native_country = st.selectbox("Native Country", ["United-States", "India", "Mexi
 
 # Dummy encoding maps (replace these with your actual training encodings)
 workclass_map = {"Private": 0, "Self-emp": 1, "Gov": 2, "Other": 3}
+education_map = {"High School": 9, "Bachelors": 13, "Masters": 15, "PhD": 16, "Other": 11}
 marital_map = {"Married": 0, "Single": 1, "Divorced": 2, "Widowed": 3, "Other": 4}
 occupation_map = {"Tech-support": 0, "Craft-repair": 1, "Sales": 2, "Exec-managerial": 3, "Other": 4}
 relationship_map = {"Husband": 0, "Not-in-family": 1, "Own-child": 2, "Unmarried": 3, "Other": 4}
@@ -55,7 +55,7 @@ features = pd.DataFrame([[
     hours_per_week,
     country_map[native_country]
 ]], columns=[
-    "age", "workclass", "educational-num", "marital-status", "occupation",
+    "age", "workclass", "educational", "marital-status", "occupation",
     "relationship", "race", "gender", "capital-gain", "capital-loss",
     "hours-per-week", "native-country"
 ])
