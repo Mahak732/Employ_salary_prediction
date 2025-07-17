@@ -65,4 +65,3 @@ if st.button("Predict Salary"):
     prediction = model.predict(features)[0]
     result = ">50K" if prediction == 1 else "<=50K"
     st.success(f"💰 Predicted Income: {result}")
-
