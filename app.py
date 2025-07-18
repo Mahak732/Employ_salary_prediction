@@ -101,8 +101,6 @@ if st.button("🔍 Predict Salary"):
     st.subheader("📊 Prediction Result")
     st.success(f"### 💰 Predicted Salary: **{result}**")
 
-    if capital_gain > 0:
-        st.info(f"📈 Detected capital gain of ₹{capital_gain} — likely influencing prediction.")
-
+   
 
 
